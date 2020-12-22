@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import CountryData from "./components/CountryData";
 
 const App = () => {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("");
-  console.log(countries);
 
   const hook = () => {
     axios.get("https://restcountries.eu/rest/v2/all").then((response) => {
@@ -14,19 +14,38 @@ const App = () => {
 
   useEffect(hook, []);
 
+  const handleChange = (event) => {
+    setCountry(event.target.value);
+    findCountry();
+  };
+
+  const findCountry = () => {
+    const result = countries.filter((countryInfo) =>
+      countryInfo.name.toLowerCase().includes(country.toLowerCase())
+    );
+
+    setCountries(result);
+  };
+
   return (
     <div>
-      <form action="">
+      <form>
         <label htmlFor="">
           Find country
           <input
             type="text"
             placeholder="find country"
             value={country}
-            onChange={(e) => setCountry(e.target.value)}
+            onChange={handleChange}
+            onSubmit={(e) => e.preventDefault()}
           />
         </label>
       </form>
+      <ul>
+        {countries.map((countryData) => (
+          <CountryData key={countryData.name} countryData={countryData} />
+        ))}
+      </ul>
     </div>
   );
 };
