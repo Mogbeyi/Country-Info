@@ -41,10 +41,10 @@ const App = () => {
       </div>
     );
   } else if (countryLength === 1) {
-
     return (
       <div>
         <Form handleChange={handleChange} country={country} />
+
         <Nation nation={filterCountries[0]} />
       </div>
     );
@@ -54,11 +54,12 @@ const App = () => {
         <Form handleChange={handleChange} country={country} />
 
         <ul>
-          {filterCountries.map((countryData) => (
+          {filterCountries.map((countryData, countryIndex) => (
             <Country
               key={countryData.name}
               countryData={countryData}
               filterCountries={filterCountries}
+              countryIndex={countryIndex}
             />
           ))}
         </ul>

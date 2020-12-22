@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import Nation from "./Nation";
 
-const country = ({ countryData, countries }) => {
+const Country = ({ countryData, filterCountries, countryIndex }) => {
+  const [showNation, setShowNation] = useState(false);
+
   return (
     <div>
-      <li>{countryData.name}</li>
+      {showNation ? (
+        <Nation nation={filterCountries[countryIndex]} />
+      ) : (
+        <li>
+          {countryData.name}{" "}
+          <button onClick={() => setShowNation(true)}>show</button>
+        </li>
+      )}
     </div>
   );
 };
 
-export default country;
+export default Country;
