@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import CountryData from "./components/CountryData";
+import Country from "./components/Country";
+import Form from "./components/Form";
 
 const App = () => {
   const [countries, setCountries] = useState([]);
+  const [filterCountries, setFilterCountries] = useState([]);
   const [country, setCountry] = useState("");
 
   const hook = () => {
@@ -24,30 +26,36 @@ const App = () => {
       countryInfo.name.toLowerCase().includes(country.toLowerCase())
     );
 
-    setCountries(result);
+    setFilterCountries(result);
   };
 
-  return (
-    <div>
-      <form>
-        <label htmlFor="">
-          Find country
-          <input
-            type="text"
-            placeholder="find country"
-            value={country}
-            onChange={handleChange}
-            onSubmit={(e) => e.preventDefault()}
-          />
-        </label>
-      </form>
-      <ul>
-        {countries.map((countryData) => (
-          <CountryData key={countryData.name} countryData={countryData} />
-        ))}
-      </ul>
-    </div>
-  );
+  const countryLength = filterCountries.length;
+
+  if (countryLength > 10) {
+    return (
+      <div>
+        <Form handleChange={handleChange} country={country} />
+
+        <p>Too many matches, specify another title</p>
+      </div>
+    );
+  } else if (countryLength <= 10) {
+    return (
+      <div>
+        <Form handleChange={handleChange} country={country} />
+
+        <ul>
+          {filterCountries.map((countryData) => (
+            <Country
+              key={countryData.name}
+              countryData={countryData}
+              filterCountries={filterCountries}
+            />
+          ))}
+        </ul>
+      </div>
+    );
+  }
 };
 
 export default App;
