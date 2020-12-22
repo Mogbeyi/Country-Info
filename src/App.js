@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Country from "./components/Country";
 import Form from "./components/Form";
+import Nation from "./components/Nation";
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -40,26 +41,11 @@ const App = () => {
       </div>
     );
   } else if (countryLength === 1) {
-    const nation = filterCountries[0];
 
     return (
       <div>
         <Form handleChange={handleChange} country={country} />
-
-        <h1>{nation.name}</h1>
-        <p>Capital: {nation.capital}</p>
-        <p>Population: {nation.population}</p>
-
-        <strong>Languages</strong>
-
-        <ul>
-          {nation.languages.map((language) => (
-            <li key={language.name}>{language.name}</li>
-          ))}
-        </ul>
-
-        <img src={nation.flag} alt="" width="150" height="100"/>
-
+        <Nation nation={filterCountries[0]} />
       </div>
     );
   } else if (countryLength <= 10) {
