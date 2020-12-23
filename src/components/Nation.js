@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Weather from "./Weather";
 const { REACT_APP_API_KEY } = process.env;
 
 const Nation = ({ nation }) => {
@@ -29,22 +30,8 @@ const Nation = ({ nation }) => {
         ))}
       </ul>
       <img src={nation.flag} alt="" width="150" height="100" />
-      <h2>Weather in {nation.capital}</h2>
-      <strong>temperature:</strong>{" "}
-      {weatherInfo.current ? weatherInfo.current.temperature : null} celcius
-      <div>
-        <img
-          src={
-            weatherInfo.current ? weatherInfo.current.weather_icons[0] : null
-          }
-          alt=""
-        />
-      </div>
-      <p>
-        <strong>wind: </strong>
-        {weatherInfo.current ? weatherInfo.current.wind_speed : null} mph
-        direction {weatherInfo.current ? weatherInfo.current.wind_dir : null}
-      </p>
+
+      <Weather nation={nation} weatherInfo={weatherInfo} />
     </div>
   );
 };
